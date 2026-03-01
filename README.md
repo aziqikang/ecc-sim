@@ -8,7 +8,10 @@ Toy elliptic curve playground with field-agnostic arithmetic.
 
 ## Curve Model
 Short Weierstrass form
-$$ y^2 = x^3 + ax + b $$
+```math
+y^2 = x^3 + ax + b
+```
+
 
 > Characteristic 2 and 3 are not supported.
 
