@@ -1,12 +1,12 @@
-# ECC
+# ECC-SIM
 
 Toy elliptic curve playground with field-agnostic arithmetic.
 
-## Currently Supported Fields
+## Currently supported fields
 - $`\mathbb{Q}`$ (rationals via `fractions.Fraction`)
 - $`\mathbb{F}_p`$ (prime fields)
 
-## Curve Model
+## Curve model
 Short Weierstrass form
 ```math
 y^2 = x^3 + ax + b
@@ -15,9 +15,18 @@ y^2 = x^3 + ax + b
 
 > Characteristic 2 and 3 are not supported.
 
----
 
-## Setup
+
+
+<br>
+<br>
+<br>
+
+
+
+
+
+### Setup
 
 ```bash
 python3 -m venv .venv
@@ -27,17 +36,15 @@ pip install -r requirements-dev.txt
 pip install -e .
 ```
 
----
 
-## Run Tests
+### To run tests
 
 ```bash
 python -m pytest -q
 ```
 
----
 
-## Run Examples
+### To run examples
 
 ```bash
 python -m examples.demo_fp97
@@ -45,9 +52,7 @@ python -m examples.demo_q
 python -m examples.demo_group_structure
 ```
 
----
-
-## Project Structure
+### Project structure
 
 ```
 ecc/        library code
@@ -55,9 +60,18 @@ tests/      pytest tests
 examples/   demo scripts
 ```
 
----
 
-## Mathematical Background
+
+
+<br>
+<br>
+<br>
+
+
+
+
+
+# Mathematical background
 
 ### Elliptic curves over finite fields
 
@@ -67,13 +81,15 @@ For a prime $p > 3$, the group $E(\mathbb{F}_p)$ of points on a short Weierstras
 E(\mathbb{F}_p) \;\cong\; \mathbb{Z}/n_1\mathbb{Z} \;\times\; \mathbb{Z}/n_2\mathbb{Z}
 ```
 
-where $n_2 \mid n_1$ and $n_1 n_2 = N = \#E(\mathbb{F}_p)$.  The Weil pairing forces $n_2 \mid \gcd(N,\, p-1)$, a strong constraint that often makes the group cyclic ($n_2 = 1$) for random curves over large prime fields.
+where $n_2 \mid n_1$ and $n_1 n_2 = N = \\#E(\mathbb{F}_p)$.  The Weil pairing forces $n_2 \mid \gcd(N,\, p-1)$, a strong constraint that often makes the group cyclic ($n_2 = 1$) for random curves over large prime fields.
 
 The representation used in this library is $((e_1,\, n_1),\, (e_2,\, n_2))$, where $e_1$ and $e_2$ are explicit points of orders $n_1$ and $n_2$ that generate the two cyclic factors.
 
----
+<details>
 
-### Step 1 — Computing $N = \#E(\mathbb{F}_p)$
+<summary><i>Implementation Details</i></summary>
+
+### Step 1: Computing $N = \\#E(\mathbb{F}_p)$
 
 **Hasse's theorem** gives the key bound:
 
@@ -97,7 +113,7 @@ The integer $t$ is the *trace of Frobenius*.  Hasse's bound confines $N$ to a wi
 
 ---
 
-### Step 2 — Finding the group structure $(n_1, n_2)$
+### Step 2: Finding the group structure $(n_1, n_2)$
 
 Given $N$ (and its factorization $N = \prod q_i^{a_i}$), the decomposition proceeds **prime by prime**.
 
@@ -126,3 +142,5 @@ The per-prime generators are combined into a single $e_2$ of order $n_2$ via the
 e_2 \;=\; \sum_{q \mid n_2} \Bigl[\frac{n_2}{q^s}\Bigr]\, \mathrm{gen}_q
 ```
 where each term has order $q^s$ and the terms are supported on disjoint primes, giving $\mathrm{ord}(e_2) = \mathrm{lcm}(q^s) = n_2$.
+
+</details>
