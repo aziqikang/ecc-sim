@@ -8,6 +8,7 @@ Public API:
 """
 
 from .fields import RationalField, PrimeField
-from .ec import Curve, Point
+from .ec import Curve, Point, group_order, group_structure, point_order
 
-__all__ = ["RationalField", "PrimeField", "Curve", "Point"]
+__all__ = ["RationalField", "PrimeField", "Curve", "Point",
+           "group_order", "group_structure", "point_order"]
